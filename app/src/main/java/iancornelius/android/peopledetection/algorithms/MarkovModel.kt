@@ -5,37 +5,6 @@ import kotlin.random.Random
 
 class MarkovModel {
 
-    val STATES = arrayOf(
-        Point(-1, -1), Point(-1, 0), Point(-1, 1),
-        Point(0, -1), Point(0, 0), Point(0, 1),
-        Point(1, -1), Point(1, 0), Point(1, 1)
-    )
-
-    var F: Array<IntArray> = arrayOf(
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-    )
-    var P: Array<DoubleArray> = arrayOf(
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    )
-//    lateinit var P: Array<FloatArray>
-//    var P: Array<FloatArray> = arrayOf(doubleArrayOf(), doubleArrayOf())
-
     init {
         for (i in STATES.indices) {
             for (j in STATES.indices) {
@@ -45,13 +14,13 @@ class MarkovModel {
         }
     }
 
-    fun updateFrequencies(previous: Point, current: Point): Unit {
+    fun updateFrequencies(previous: Point, current: Point) {
         val i = STATES.indexOf(previous)
         val j = STATES.indexOf(current)
         F[i][j] += 1
     }
 
-    fun updateProbabilities(): Unit {
+    fun updateProbabilities() {
         for (i in P.indices) {
             for (j in 0 until P[i].size) {
                 var total = 0.0
@@ -76,6 +45,37 @@ class MarkovModel {
             if (r <= total) { return STATES[j] }
         }
         return Point(-9, -9)
+    }
+
+    companion object {
+        val STATES = arrayOf(
+            Point(-1, -1), Point(-1, 0), Point(-1, 1),
+            Point(0, -1), Point(0, 0), Point(0, 1),
+            Point(1, -1), Point(1, 0), Point(1, 1)
+        )
+
+        var F: Array<IntArray> = arrayOf(
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        )
+        var P: Array<DoubleArray> = arrayOf(
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        )
     }
 
 }
